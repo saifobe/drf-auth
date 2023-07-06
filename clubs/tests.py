@@ -1,11 +1,13 @@
-from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APITestCase
 from .models import Club
 
 
 # Create your tests here.
 
-class ThingTests(TestCase):
+class ClubsTests(TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -23,3 +25,12 @@ class ThingTests(TestCase):
         self.assertEqual(actual_fan,"testuser1")
         self.assertEqual(actual_name,"flower")
         self.assertEqual(actual_club_wiki,"test desc ...")
+
+    def test_club_content(self):
+        club = Club.objects.get(id=1)
+        expected_fan= f'{club.fan}'
+        expected_name = f'{club.name}'
+        expected_club_wiki = f'{club.club_wiki}'
+        self.assertEqual(expected_fan, 'testuser1')
+        self.assertEqual(expected_name, 'flower')
+        self.assertEqual(expected_club_wiki, 'test desc ...')
